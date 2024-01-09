@@ -1,25 +1,16 @@
+import { useLoaderData } from "react-router-dom";
+
 export default function MessageBoard() {
-  const mockMessages = [
-    {
-      message: "Test MEssage",
-      user: "Suna",
-      date: new Date(),
-    },
-    {
-      message: "Test MEssage2",
-      user: "Tuna",
-      date: new Date(),
-    },
-  ];
+  const messages = useLoaderData();
 
   return (
     <div>
-      {mockMessages.map((message) => {
+      {messages.map((message) => {
         return (
-          <div key={message.date.toDateString()}>
-            <div>{message.user}</div>
+          <div key={message.date + message.user._id}>
+            <div>{message.user.username}</div>
             <div>{message.message}</div>
-            <div>{message.date.toDateString()}</div>
+            <div>{message.date}</div>
           </div>
         );
       })}
