@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./root";
 import Home from "./Home";
 import MessageBoard from "./Message-Board";
+import SignUp from "./Sign-Up";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -16,19 +17,10 @@ export default function Router() {
         {
           path: "/message-board",
           element: <MessageBoard />,
-          loader: async () => {
-            const data = await fetch(
-              "https://top-members-only-api.fly.dev/message-board",
-              {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            return data;
-          },
+        },
+        {
+          path: "/sign-up",
+          element: <SignUp />,
         },
       ],
     },
