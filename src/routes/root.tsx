@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import "../App.css";
 
 export default function Root() {
-  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -26,12 +26,13 @@ export default function Root() {
       });
 
       if (res.ok) {
+        const { user } = await res.json();
+        setUserId(user);
         navigate("/message-board");
+        setLoading(false);
       }
     } catch (error) {
       setError(true);
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -42,7 +43,14 @@ export default function Root() {
   return (
     <>
       <Outlet
-        context={{ token, setToken, credentials, setCredentials, login }}
+        context={{
+          userId,
+          setUserId,
+          credentials,
+          setCredentials,
+          login,
+          error,
+        }}
       />
     </>
   );
