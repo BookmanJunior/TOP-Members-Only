@@ -8,14 +8,14 @@ export default function LoginForm() {
   });
   const navigate = useNavigate();
 
-  const { setLoading, setError, setUser } = useOutletContext();
+  const { setLoading, setError, setUser, error } = useOutletContext();
 
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch("https://top-members-only-api.fly.dev/login", {
+      const res = await fetch("http://localhost:3000/login", {
         method: "POST",
         mode: "cors",
         credentials: "include",
@@ -27,10 +27,16 @@ export default function LoginForm() {
         const { user } = await res.json();
         setUser(user);
         navigate("/message-board");
-        setLoading(false);
+      }
+
+      if (res.status >= 400) {
+        const errorMessage = await res.json();
+        setError(errorMessage);
       }
     } catch (error) {
-      setError(true);
+      setError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -57,6 +63,7 @@ export default function LoginForm() {
             setCredentials({ ...credentials, password: e.target.value })
           }
         />
+        {error && <p>{error.message}</p>}
         <button>Login</button>
       </form>
     </>
