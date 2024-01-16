@@ -2,21 +2,20 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function MessageBoard() {
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState([]);
+  const [loadingMessages, setLoadingMessage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchMessages() {
+      setLoadingMessage(true);
       try {
-        const res = await fetch(
-          "https://top-members-only-api.fly.dev/message-board",
-          {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        const res = await fetch("http://localhost:3000/message-board", {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        });
 
         if (res.ok) {
           const data = await res.json();
@@ -28,6 +27,8 @@ export default function MessageBoard() {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoadingMessage(false);
       }
     }
 
@@ -37,7 +38,10 @@ export default function MessageBoard() {
 
   return (
     <div>
-      {messages
+      <MessageForm setMessages={setMessages} />
+      {loadingMessages
+        ? "Loading"
+        : messages.length
         ? messages.map((message) => {
             return (
               <Message key={message.date + message._id} message={message} />
@@ -45,6 +49,64 @@ export default function MessageBoard() {
           })
         : "No Messages"}
     </div>
+  );
+}
+
+function MessageForm({ setMessages }) {
+  const [userMessage, setUserMessage] = useState("");
+  const [messageSubmitted, setMessageSubmitted] = useState(false);
+  const [errors, setErrors] = useState();
+
+  async function handleMessageSubmit(e) {
+    e.preventDefault();
+    setMessageSubmitted(true);
+
+    try {
+      const res = await fetch("http://localhost:3000/message-board", {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setMessages((prev) => [data, ...prev]);
+        setUserMessage("");
+      }
+
+      if (res.status >= 400) {
+        const errorData = await res.json();
+        setErrors(errorData);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setMessageSubmitted(false);
+    }
+  }
+
+  return (
+    <form onSubmit={handleMessageSubmit}>
+      <textarea
+        name=""
+        id=""
+        cols={30}
+        rows={10}
+        placeholder="Your message here..."
+        value={userMessage}
+        onChange={(e) => setUserMessage(e.target.value)}
+      ></textarea>
+      {errors && (
+        <ul className="errors">
+          {errors.map((error) => (
+            <li key={error.path}>{error.msg}</li>
+          ))}
+        </ul>
+      )}
+      <button disabled={messageSubmitted}>Post</button>
+    </form>
   );
 }
 
