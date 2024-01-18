@@ -4,7 +4,7 @@ import "../App.css";
 
 export default function Root() {
   const [user, setUser] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
   if (loading) {

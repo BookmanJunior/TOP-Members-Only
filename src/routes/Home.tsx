@@ -9,7 +9,7 @@ export default function Home() {
   useEffect(() => {
     async function auth() {
       try {
-        const res = await fetch("http://localhost:3000/automatic-login", {
+        const res = await fetch("http://localhost:3000/auth/automatic-login", {
           method: "POST",
           mode: "cors",
           credentials: "include",
