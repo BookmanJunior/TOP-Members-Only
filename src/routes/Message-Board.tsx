@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import LogOut from "../components/LogOut";
 
 export default function MessageBoard() {
   const [messages, setMessages] = useState([]);
   const [loadingMessages, setLoadingMessage] = useState(false);
   const navigate = useNavigate();
+  const { user } = useOutletContext();
 
   useEffect(() => {
     async function fetchMessages() {
@@ -38,13 +40,19 @@ export default function MessageBoard() {
 
   return (
     <div>
+      <LogOut />
       <MessageForm setMessages={setMessages} />
       {loadingMessages
         ? "Loading"
         : messages.length
         ? messages.map((message) => {
             return (
-              <Message key={message.date + message._id} message={message} />
+              <Message
+                key={message.date + message._id}
+                message={message}
+                user={user}
+                setMessages={setMessages}
+              />
             );
           })
         : "No Messages"}
@@ -70,16 +78,15 @@ function MessageForm({ setMessages }) {
         body: JSON.stringify({ message: userMessage }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setMessages((prev) => [data, ...prev]);
-        setUserMessage("");
-      }
-
       if (res.status >= 400) {
         const errorData = await res.json();
         setErrors(errorData);
+        return;
       }
+
+      const data = await res.json();
+      setMessages((prev) => [data, ...prev]);
+      setUserMessage("");
     } catch (error) {
       console.log(error);
     } finally {
@@ -88,11 +95,18 @@ function MessageForm({ setMessages }) {
   }
 
   return (
-    <form onSubmit={handleMessageSubmit}>
+    <form
+      onSubmit={handleMessageSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1em",
+      }}
+    >
       <textarea
         name=""
         id=""
-        cols={30}
+        cols={50}
         rows={10}
         placeholder="Your message here..."
         value={userMessage}
@@ -110,12 +124,56 @@ function MessageForm({ setMessages }) {
   );
 }
 
-function Message({ message }) {
+function Message({ message, user, setMessages }) {
+  const isUserAdmin = user.admin;
+  const messageCredentials = {
+    messageId: message._id,
+  };
+  const [deletingMessageStatus, setDeletingMessageStatus] = useState(false);
+
+  async function handleMessageDelete(e) {
+    e.preventDefault();
+    setDeletingMessageStatus(true);
+
+    try {
+      const res = await fetch(
+        `http://localhost:3000/message-board/${message._id}/delete`,
+        {
+          method: "DELETE",
+          mode: "cors",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(messageCredentials),
+        }
+      );
+
+      if (res.status >= 400) {
+        const data = await res.json();
+        console.log(data);
+        return;
+      }
+
+      const data = await res.json();
+      setMessages(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setDeletingMessageStatus(false);
+    }
+  }
+
   return (
-    <div className="user-message">
-      <div>{message.user.username}</div>
-      <div>{message.message}</div>
-      <div>{message.date}</div>
-    </div>
+    <>
+      <div className="user-message">
+        <div>{message.user.username}</div>
+        <div>{message.message}</div>
+        <div>{message.date}</div>
+      </div>
+      {isUserAdmin && (
+        <form onSubmit={handleMessageDelete}>
+          <button disabled={deletingMessageStatus}>Delete</button>
+        </form>
+      )}
+    </>
   );
 }
