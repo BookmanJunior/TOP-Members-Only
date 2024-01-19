@@ -41,7 +41,7 @@ export default function MessageBoard() {
   return (
     <div>
       <LogOut />
-      <MessageForm setMessages={setMessages} />
+      <MessageForm setMessages={setMessages} user={user} />
       {loadingMessages
         ? "Loading"
         : messages.length
@@ -60,7 +60,7 @@ export default function MessageBoard() {
   );
 }
 
-function MessageForm({ setMessages }) {
+function MessageForm({ setMessages, user }) {
   const [userMessage, setUserMessage] = useState("");
   const [messageSubmitted, setMessageSubmitted] = useState(false);
   const [errors, setErrors] = useState();
@@ -85,7 +85,9 @@ function MessageForm({ setMessages }) {
       }
 
       const data = await res.json();
-      setMessages((prev) => [data, ...prev]);
+      // edit message to include username
+      const editedData = { ...data, user: user };
+      setMessages((prev) => [editedData, ...prev]);
       setUserMessage("");
     } catch (error) {
       console.log(error);
