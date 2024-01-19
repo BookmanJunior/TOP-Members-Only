@@ -1,5 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import blue from "../assets/profile-pictures/blue.svg";
+import orange from "../assets/profile-pictures/orange.svg";
+import gray from "../assets/profile-pictures/gray.svg";
+import green from "../assets/profile-pictures/green.svg";
+import red from "../assets/profile-pictures/red.svg";
+import pink from "../assets/profile-pictures/pink.svg";
+import brown from "../assets/profile-pictures/brown.svg";
+import lime from "../assets/profile-pictures/lime.svg";
+import "../styles/style.css";
 
 export default function SignUp() {
   const [userCredentials, setUserCredentials] = useState({
@@ -86,6 +95,19 @@ export default function SignUp() {
         onChange={(e) => handleCredentialsChange(e, "confirm-password")}
       />
       <ValidationError errors={errors} errorPath={"confirm-password"} />
+      <section role="radiogroup" className="profile-pictures">
+        <p>Pick a profile pictures: </p>
+        <div className="profile-pictures-wrapper">
+          <ProfilePicture value="blue" src={blue} />
+          <ProfilePicture value="orange" src={orange} />
+          <ProfilePicture value="red" src={red} />
+          <ProfilePicture value="pink" src={pink} />
+          <ProfilePicture value="green" src={green} />
+          <ProfilePicture value="gray" src={gray} />
+          <ProfilePicture value="brown" src={brown} />
+          <ProfilePicture value="lime" src={lime} />
+        </div>
+      </section>
       <button disabled={submittedSignUp}>Register</button>
     </form>
   );
@@ -101,5 +123,20 @@ function ValidationError({ errors, errorPath }) {
           ))}
       </ul>
     )
+  );
+}
+
+function ProfilePicture({ value, src }) {
+  return (
+    <label htmlFor={`pfp-${value}`} className={`pfp-container pfp-${value}`}>
+      <img src={src} alt={`pfp-${value}`} />
+      <input
+        type="radio"
+        name="profile-picture"
+        id={`pfp-${value}`}
+        className={`pfp-btn pfp-${value}`}
+        value={value}
+      />
+    </label>
   );
 }
