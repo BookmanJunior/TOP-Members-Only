@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import LogOutIcon from "../assets/logout-icon.svg?react";
 
 export default function LogOut() {
   const navigate = useNavigate();
-  async function handleLogOut(e) {
+  async function handleLogOut(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
@@ -24,8 +25,10 @@ export default function LogOut() {
   }
 
   return (
-    <form onSubmit={handleLogOut}>
-      <button>Log Out</button>
+    <form className="logout-form" onSubmit={handleLogOut}>
+      <button className="logout__btn">
+        <LogOutIcon />
+      </button>
     </form>
   );
 }
