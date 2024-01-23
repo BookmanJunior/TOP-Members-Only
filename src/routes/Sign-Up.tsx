@@ -94,6 +94,7 @@ export default function SignUp() {
         />
         <ValidationError errors={errors} errorPath={"confirm-password"} />
         <AvatarPicker handleCredentialsChange={handleCredentialsChange} />
+        <ValidationError errors={errors} errorPath={"avatar"} />
         <button disabled={submittedSignUp}>Register</button>
       </form>
     </>
@@ -103,10 +104,12 @@ export default function SignUp() {
 function ValidationError({ errors, errorPath }) {
   return (
     errors && (
-      <ul className="validation-errors">
+      <ul className="error-msgs">
         {errors[errorPath] !== undefined &&
           errors[errorPath].map((err, index) => (
-            <li key={errors[errorPath] + index}>{err}</li>
+            <li key={errors[errorPath] + index} className="error-msg">
+              {err}
+            </li>
           ))}
       </ul>
     )
