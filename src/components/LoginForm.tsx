@@ -15,7 +15,7 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3000/login", {
+      const res = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         mode: "cors",
         credentials: "include",
@@ -42,7 +42,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form onSubmit={login}>
+      <form onSubmit={login} className="login-form">
         <label htmlFor="username">Username: </label>
         <input
           type="text"
@@ -63,7 +63,7 @@ export default function LoginForm() {
             setCredentials({ ...credentials, password: e.target.value })
           }
         />
-        {error && <p>{error.message}</p>}
+        {error && <span className="error-msg">{error.message}</span>}
         <button>Login</button>
       </form>
     </>
