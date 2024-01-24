@@ -21,7 +21,7 @@ const avatars = [
 export default function AvatarPicker({ handleCredentialsChange }) {
   return (
     <section className="avatar-picker">
-      <p className="title__avatar-picker">Pick a profile picture: </p>
+      <p className="title__avatar-picker">Choose Avatar: </p>
       <div role="radiogroup" className="avatars-wrapper">
         {avatars.map((avatar) => (
           <Avatar
@@ -40,9 +40,9 @@ function Avatar({ value, src, handleCredentialsChange }) {
   return (
     <label
       htmlFor={`avatar__${value}`}
-      className={`avatar__container avatar__${value}`}
+      className={`avatar__container avatar__container--${value}`}
     >
-      <img src={src} alt={`avatar__${value}__img`} />
+      <img src={src} alt={`${value} avatar`} />
       <input
         type="radio"
         name="avatar"
