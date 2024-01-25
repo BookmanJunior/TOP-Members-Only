@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Logo from "../assets/logo-durarara.svg";
 import AvatarPicker from "../components/AvatarPicker";
-import "../styles/style.css";
+import "../styles/sign-up.css";
 
 export default function SignUp() {
   const [userCredentials, setUserCredentials] = useState({

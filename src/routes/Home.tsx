@@ -2,6 +2,7 @@ import { useOutletContext, useNavigate, Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import { useEffect } from "react";
 import Logo from "../assets/logo-durarara.svg";
+import "../styles/home.css";
 
 export default function Home() {
   const { user, setUser } = useOutletContext();
