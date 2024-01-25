@@ -1,0 +1,82 @@
+.avatars-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-block: 0.5em;
+}
+
+.avatar__container {
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+  cursor: pointer;
+  transition: 100ms;
+
+  position: relative;
+}
+
+.avatar__container::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  scale: 0;
+  transition: scale 100ms ease-out, opacity 100ms linear;
+  z-index: -1;
+}
+
+.avatar__container > img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.avatars-wrapper:has(input[type="radio"]:checked)
+  .avatar__container:has(input[type="radio"]:not(:checked)) {
+  opacity: 0.5;
+}
+
+.avatar__container:has(input[type="radio"]:is(:checked)) {
+  &.avatar__container::before {
+    scale: 1.1;
+  }
+
+  &.avatar__container--blue::before {
+    background-color: var(--blue);
+  }
+
+  &.avatar__container--orange::before {
+    background-color: var(--orange);
+  }
+
+  &.avatar__container--gray::before {
+    background-color: var(--gray);
+  }
+
+  &.avatar__container--green::before {
+    background-color: var(--green);
+  }
+
+  &.avatar__container--red::before {
+    background-color: var(--red);
+  }
+
+  &.avatar__container--pink::before {
+    background-color: var(--pink);
+  }
+
+  &.avatar__container--brown::before {
+    background-color: var(--brown);
+  }
+
+  &.avatar__container--lime::before {
+    background-color: var(--lime);
+  }
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 0;
+  height: 0;
+}

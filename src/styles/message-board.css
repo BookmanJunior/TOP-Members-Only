@@ -1,0 +1,135 @@
+/* header styles */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background-color: rgb(57 57 62 / 90%);
+  padding: 1em;
+  backdrop-filter: blur(5px);
+  width: 100%;
+}
+
+.header__wrapper,
+.messages {
+  width: min(600px, 100%);
+  margin-inline: auto;
+}
+
+nav {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+}
+
+.avatar__nav {
+  max-width: 26px;
+  max-height: 26px;
+}
+
+.logout__btn {
+  padding: 0;
+  background-color: transparent;
+}
+
+.message-form {
+  position: relative;
+
+  & textarea:focus ~ .message__word-count,
+  textarea:not(:placeholder-shown) ~ .message__word-count {
+    display: inline;
+  }
+}
+
+.message__word-count {
+  left: 0;
+  right: 0;
+  top: 40%;
+  position: absolute;
+  display: none;
+}
+
+/* Messageboard styles */
+
+.messages {
+  word-break: break-word;
+}
+
+.message {
+  display: flex;
+  gap: 2em;
+  margin-block: 1em;
+}
+
+.user-info__message {
+  text-align: center;
+}
+
+.avatar__message {
+  max-width: 60px;
+  aspect-ratio: 1;
+}
+
+.username__message {
+  max-width: 60px;
+  word-break: break-all;
+}
+
+.user__message {
+  display: grid;
+  place-content: center;
+  align-self: start;
+  position: relative;
+
+  border: 4px solid #ffffff;
+  border-radius: 1em;
+  padding: 1em;
+  min-height: 60px;
+  font-weight: 600;
+
+  &.user__message--pink {
+    background-image: var(--pink-gradient);
+  }
+
+  &.user__message--red {
+    background-image: var(--red-gradient);
+  }
+
+  &.user__message--green {
+    background-image: var(--green-gradient);
+  }
+
+  &.user__message--gray {
+    background-image: var(--gray--gradient);
+  }
+
+  &.user__message--orange {
+    background-image: var(--green-gradient);
+  }
+}
+
+/* outer tail */
+.user__message::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-width: 6px 18px 7px 0;
+  border-color: transparent #ffffff transparent transparent;
+  border-style: solid;
+  left: -20px;
+  top: 20px;
+}
+
+/* inner tail */
+/* .user__message::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-width: 5px 12px 3px 0;
+  border-color: transparent #f10101 transparent transparent;
+  border-style: solid;
+  left: -12px;
+  top: 23px;
+} */

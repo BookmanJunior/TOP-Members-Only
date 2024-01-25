@@ -1,0 +1,181 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --pink: #de86ac;
+  --red: #ab1d19;
+  --gray: #527c8d;
+  --orange: #fda500;
+  --green: #59a259;
+  --brown: #797130;
+  --lime: #c8ffa6;
+  --blue: #51afe9;
+  --pink-gradient: linear-gradient(
+    #de86ac 0,
+    #c96294 50%,
+    #b34477 51%,
+    #af497c 100%
+  );
+  --red-gradient: linear-gradient(
+    #d1727a 0,
+    #a52526 50%,
+    #970d03 51%,
+    #a7140c 100%
+  );
+  --green-gradient: linear-gradient(
+    #acf26a 0,
+    #57c22a 50%,
+    #42aa2d 51%,
+    #4fb32e 100%
+  );
+  --gray--gradient: linear-gradient(
+    #cec5c3 0,
+    #a39a9c 50%,
+    #857981 51%,
+    #797175 100%
+  );
+  --orange--gradient: linear-gradient(
+    #fad34b 0,
+    #f99d35 50%,
+    #dc721b 51%,
+    #f9831e 100%
+  );
+  --color-warning: #dd636e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+input,
+textarea {
+  padding: 0.3em 1em;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+
+  &:hover {
+    border-color: #646cff;
+  }
+
+  &:is(:focus, :focus-visible) {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+}
+
+input:invalid {
+  outline: 1px solid var(--color-warning);
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+
+  &:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+}
+
+/* error styles */
+.error-msg {
+  display: flex;
+  color: var(--color-warning);
+}
+
+.error-msg::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../assets/warning-icon.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-right: 0.7em;
+
+  flex-shrink: 0;
+}
