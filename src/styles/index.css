@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --input-padding: 0.3em 1em;
   --pink: #de86ac;
   --red: #ab1d19;
   --gray: #527c8d;
@@ -94,9 +95,8 @@ h6 {
   isolation: isolate;
 }
 
-input,
-textarea {
-  padding: 0.3em 1em;
+input {
+  padding: var(--input-padding);
 }
 
 ul {
