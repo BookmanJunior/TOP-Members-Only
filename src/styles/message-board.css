@@ -41,6 +41,24 @@ nav {
   }
 }
 
+.textarea-grow-wrap {
+  display: grid;
+
+  & textarea,
+  & span {
+    grid-area: 1 / 1 / 2 / 2;
+    padding: var(--input-padding);
+  }
+
+  & span {
+    visibility: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+    pointer-events: none;
+    max-height: 350px;
+  }
+}
+
 .message__word-count {
   left: 0;
   right: 0;
