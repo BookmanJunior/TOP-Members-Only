@@ -59,6 +59,11 @@ nav {
   display: flex;
   gap: 2em;
   margin-block: 1em;
+
+  & .avatar__message,
+  & .username__message {
+    max-width: 3.75rem;
+  }
 }
 
 .user-info__message {
@@ -66,26 +71,57 @@ nav {
 }
 
 .avatar__message {
-  max-width: 60px;
   aspect-ratio: 1;
 }
 
 .username__message {
-  max-width: 60px;
   word-break: break-all;
 }
 
 .user__message {
+  --point-width: 1rem;
+  --point-height: 0.7rem;
+  --point-top-offset: 1.15rem;
+  --bw: 1px;
+  --bg: #ffffff;
+
   display: grid;
   place-content: center;
   align-self: start;
   position: relative;
 
-  border: 4px solid #ffffff;
-  border-radius: 1em;
-  padding: 1em;
-  min-height: 60px;
+  border: 4px solid var(--bg);
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  min-height: 3.75rem;
   font-weight: 600;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+  }
+
+  &::before {
+    inset: 0 100% 0 calc(var(--point-width) * -0.6);
+    background-image: inherit;
+    clip-path: polygon(
+      0 calc(1.3rem + 0.4rem / 2),
+      100% 1.3rem,
+      100% calc(1.3rem + 0.4rem)
+    );
+  }
+
+  &::after {
+    inset: 0 100% 0 calc(1.5rem * -1);
+    background-color: var(--bg);
+    clip-path: polygon(
+      0 calc(var(--point-top-offset) + var(--point-height) / 2),
+      100% var(--point-top-offset),
+      100% calc(var(--point-top-offset) + var(--point-height))
+    );
+    z-index: -1;
+  }
 
   &.user__message--pink {
     background-image: var(--pink-gradient);
@@ -107,29 +143,3 @@ nav {
     background-image: var(--green-gradient);
   }
 }
-
-/* outer tail */
-.user__message::before {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-width: 6px 18px 7px 0;
-  border-color: transparent #ffffff transparent transparent;
-  border-style: solid;
-  left: -20px;
-  top: 20px;
-}
-
-/* inner tail */
-/* .user__message::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-width: 5px 12px 3px 0;
-  border-color: transparent #f10101 transparent transparent;
-  border-style: solid;
-  left: -12px;
-  top: 23px;
-} */
