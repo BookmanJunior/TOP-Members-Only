@@ -1,8 +1,18 @@
-/* header styles */
+.message-board {
+  display: grid;
+  min-height: 100vh;
+  width: 100%;
+  grid-template-rows: 1fr auto;
+}
 
-header {
+.no-messages-text {
+  place-self: center;
+}
+
+/* footer styles */
+footer {
   position: sticky;
-  top: 0;
+  bottom: 0;
   z-index: 99;
   background-color: rgb(57 57 62 / 90%);
   padding: 1em;
@@ -10,7 +20,7 @@ header {
   width: 100%;
 }
 
-.header__wrapper,
+.footer__wrapper,
 .messages {
   width: min(600px, 100%);
   margin-inline: auto;
