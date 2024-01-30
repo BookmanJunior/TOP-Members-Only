@@ -5,13 +5,11 @@ import "../styles/message-board.css";
 
 export default function MessageBoard() {
   const [messages, setMessages] = useState([]);
-  const [loadingMessages, setLoadingMessage] = useState(false);
   const navigate = useNavigate();
   const { user } = useOutletContext();
 
   useEffect(() => {
     async function fetchMessages() {
-      setLoadingMessage(true);
       try {
         const res = await fetch("http://localhost:3000/message-board", {
           method: "GET",
@@ -30,8 +28,6 @@ export default function MessageBoard() {
         }
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoadingMessage(false);
       }
     }
 
@@ -81,7 +77,7 @@ function MessageForm({ setMessages, user }) {
       const data = await res.json();
       // edit message to include username
       const editedData = { ...data, user: user };
-      setMessages((prev) => [editedData, ...prev]);
+      setMessages((prev) => [...prev, editedData]);
       setUserMessage("");
     } catch (error) {
       console.log(error);
@@ -138,31 +134,36 @@ function MessageForm({ setMessages, user }) {
 }
 
 function Messages({ messages, user, setMessages }) {
+  const messageEndRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (messages.length) {
       messageEndRef.current?.scrollIntoView();
     }
   }, [messages.length]);
 
-  const messageEndRef = useRef();
-  return messages.length ? (
-    <>
-      <div className="messages">
-        {messages.map((message) => {
-          return (
-            <Message
-              key={message.date + message._id}
-              message={message}
-              user={user}
-              setMessages={setMessages}
-            />
-          );
-        })}
-      </div>
-      <div ref={messageEndRef} className="scroll__to__bottom"></div>
-    </>
-  ) : (
-    <span className="no-messages-text">No Messages</span>
+  return (
+    <div className="messages">
+      {messages.length ? (
+        <>
+          {messages.map((message) => {
+            return (
+              <Message
+                key={message.date + message._id}
+                message={message}
+                user={user}
+                setMessages={setMessages}
+              />
+            );
+          })}
+          <div ref={messageEndRef} className="scroll__to__bottom"></div>
+        </>
+      ) : (
+        Array.from({ length: 9 }).map((val, index) => {
+          return <MessageSkeletons key={index} />;
+        })
+      )}
+    </div>
   );
 }
 
@@ -228,5 +229,17 @@ function Message({ message, user, setMessages }) {
         )}
       </div>
     </>
+  );
+}
+
+function MessageSkeletons() {
+  return (
+    <div className="message message-skeleton">
+      <div className="user-info__message user-info__message-skeleton">
+        <div className="avatar__message avatar-skeleton skeleton"></div>
+        <div className="username__message username-skeleton skeleton"></div>
+      </div>
+      <div className={`user__message user-message-skeleton skeleton`}></div>
+    </div>
   );
 }
