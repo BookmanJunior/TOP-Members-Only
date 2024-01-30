@@ -90,7 +90,7 @@ nav {
 
   & .avatar__message,
   & .username__message {
-    max-width: 3.75rem;
+    max-width: 3.15rem;
   }
 }
 
@@ -169,5 +169,38 @@ nav {
 
   &.user__message--orange {
     background-image: var(--green-gradient);
+  }
+}
+
+/* skeleton */
+
+.skeleton {
+  background-color: #45474b;
+  animation: pulsate 800ms infinite alternate-reverse;
+}
+
+.user-message-skeleton::before {
+  background-color: inherit;
+}
+
+.user-message-skeleton {
+  width: 300px;
+}
+
+.avatar-skeleton {
+  height: 50px;
+  margin-bottom: 3px;
+}
+
+.username-skeleton {
+  height: 15px;
+}
+
+@keyframes pulsate {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
   }
 }
