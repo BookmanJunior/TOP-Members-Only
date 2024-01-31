@@ -16,11 +16,14 @@ export default function SignUp() {
   const [submittedSignUp, setSubmittedSignUp] = useState(false);
   const navigate = useNavigate();
 
-  function handleCredentialsChange(e, prop) {
+  function handleCredentialsChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    prop: string
+  ) {
     setUserCredentials({ ...userCredentials, [prop]: e.target.value });
   }
 
-  async function handleSignUp(e) {
+  async function handleSignUp(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmittedSignUp(true);
 
@@ -58,23 +61,14 @@ export default function SignUp() {
   return (
     <>
       <img src={Logo} alt="dollars logo" className="logo logo-sign-up" />
-      <form
-        onSubmit={handleSignUp}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5em",
-          textAlign: "left",
-          width: "350px",
-        }}
-        className="sign-up-from"
-      >
+      <form onSubmit={handleSignUp} className="sign-up-form">
         <label htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
           name="username"
           onChange={(e) => handleCredentialsChange(e, "username")}
+          autoComplete="username"
         />
         <ValidationError errors={errors} errorPath={"username"} />
         <label htmlFor="password">Password:</label>
@@ -83,6 +77,7 @@ export default function SignUp() {
           id="password"
           name="password"
           onChange={(e) => handleCredentialsChange(e, "password")}
+          autoComplete="new-password"
         />
         <ValidationError errors={errors} errorPath={"password"} />
         <label htmlFor="confirm-password">Confirm Password:</label>
@@ -91,6 +86,7 @@ export default function SignUp() {
           id="confirm-password"
           name="confirm-password"
           onChange={(e) => handleCredentialsChange(e, "confirm-password")}
+          autoComplete="new-password"
         />
         <ValidationError errors={errors} errorPath={"confirm-password"} />
         <AvatarPicker handleCredentialsChange={handleCredentialsChange} />

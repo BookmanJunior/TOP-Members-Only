@@ -52,6 +52,7 @@ export default function LoginForm() {
           onChange={(e) =>
             setCredentials({ ...credentials, username: e.target.value })
           }
+          autoComplete="username"
         />
         <label htmlFor="password">Password: </label>
         <input
@@ -62,6 +63,7 @@ export default function LoginForm() {
           onChange={(e) =>
             setCredentials({ ...credentials, password: e.target.value })
           }
+          autoComplete="current-password"
         />
         {error && <span className="error-msg">{error.message}</span>}
         <button>Login</button>
