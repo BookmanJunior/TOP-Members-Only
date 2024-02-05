@@ -5,81 +5,6 @@
   grid-template-rows: 1fr auto;
 }
 
-.no-messages-text {
-  place-self: center;
-}
-
-/* footer styles */
-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 99;
-  background-color: rgb(57 57 62 / 90%);
-  padding: 1em;
-  backdrop-filter: blur(5px);
-  width: 100%;
-
-  .footer__wrapper {
-    display: flex;
-    gap: 1em;
-  }
-
-  & form {
-    flex: 1;
-  }
-}
-
-.footer__wrapper,
-.messages {
-  width: min(600px, 100%);
-  margin-inline: auto;
-}
-
-nav {
-  display: flex;
-  justify-content: end;
-  gap: 5px;
-  order: 1;
-
-  .avatar__nav {
-    margin-inline: auto;
-    max-width: 26px;
-    max-height: 26px;
-  }
-
-  .logout__btn {
-    padding: 0;
-    background-color: transparent;
-  }
-}
-
-.textarea-grow-wrap {
-  display: grid;
-
-  & textarea,
-  & span {
-    grid-area: 1 / 1 / 2 / 2;
-    padding: var(--input-padding);
-  }
-
-  & span {
-    visibility: hidden;
-    white-space: pre-wrap;
-    word-break: break-word;
-    pointer-events: none;
-    max-height: 350px;
-  }
-}
-
-.message__word-count {
-  visibility: hidden;
-}
-
-.textarea-grow-wrap:has(textarea:focus, textarea:not(:placeholder-shown))
-  ~ .message__word-count {
-  visibility: visible;
-}
-
 /* Messageboard styles */
 
 .messages {
@@ -216,6 +141,77 @@ nav {
   &.message__bubble--blue {
     background-image: var(--blue-gradient);
   }
+}
+
+/* footer styles */
+footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgb(57 57 62 / 90%);
+  padding: 1em;
+  backdrop-filter: blur(5px);
+  width: 100%;
+
+  .footer__wrapper {
+    display: flex;
+    gap: 1em;
+  }
+
+  & form {
+    flex: 1;
+  }
+}
+
+.footer__wrapper,
+.messages {
+  width: min(600px, 100%);
+  margin-inline: auto;
+}
+
+nav {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+  order: 1;
+
+  .avatar__nav {
+    margin-inline: auto;
+    max-width: 26px;
+    max-height: 26px;
+  }
+
+  .logout__btn {
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+.textarea-grow-wrap {
+  display: grid;
+
+  & textarea,
+  & span {
+    grid-area: 1 / 1 / 2 / 2;
+    padding: var(--input-padding);
+  }
+
+  & span {
+    visibility: hidden;
+    white-space: pre-wrap;
+    word-break: break-word;
+    pointer-events: none;
+    max-height: 350px;
+  }
+}
+
+.message__word-count {
+  visibility: hidden;
+}
+
+.textarea-grow-wrap:has(textarea:focus, textarea:not(:placeholder-shown))
+  ~ .message__word-count {
+  visibility: visible;
 }
 
 /* skeleton */
