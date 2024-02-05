@@ -6,9 +6,10 @@ export default function LoginForm() {
     username: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { setLoading, setError, setUser, error } = useOutletContext();
+  const { setError, setUser, error } = useOutletContext();
 
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -66,7 +67,12 @@ export default function LoginForm() {
           autoComplete="current-password"
         />
         {error && <span className="error-msg">{error.message}</span>}
-        <button>Login</button>
+        <button
+          className={`login-btn ${loading ? "loading" : ""}`}
+          disabled={loading}
+        >
+          Login
+        </button>
       </form>
     </>
   );
