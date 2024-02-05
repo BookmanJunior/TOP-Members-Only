@@ -152,7 +152,7 @@ function Messages({ messages, user, setMessages }) {
         </>
       ) : (
         Array.from({ length: 9 }).map((val, index) => {
-          return <MessageSkeleton key={index} />;
+          return <SkeletonMessage key={index} />;
         })
       )}
     </div>
@@ -201,16 +201,16 @@ function Message({ message, user, setMessages }) {
   return (
     <>
       <div className="message">
-        <div className="user-info__message">
+        <div className="message__user-info">
           <img
             src={userAvatar}
             alt="user avatar"
-            className="avatar avatar__message"
+            className="message__avatar avatar"
           />
-          <div className="username__message">{message?.user?.username}</div>
+          <div className="message__username">{message?.user?.username}</div>
         </div>
         <div
-          className={`user__message user__message--${message?.user?.avatar}`}
+          className={`message__bubble message__bubble--${message?.user?.avatar}`}
         >
           {message.message}
         </div>
@@ -224,14 +224,16 @@ function Message({ message, user, setMessages }) {
   );
 }
 
-function MessageSkeleton() {
+function SkeletonMessage() {
   return (
-    <div className="message message-skeleton">
-      <div className="user-info__message user-info__message-skeleton">
-        <div className="avatar__message avatar-skeleton skeleton"></div>
-        <div className="username__message username-skeleton skeleton"></div>
+    <div className="message skeleton-message">
+      <div className="message__user-info skeleton-message__user-info">
+        <div className="message__avatar skeleton-message__avatar skeleton"></div>
+        <div className="message__username skeleton-message__username skeleton"></div>
       </div>
-      <div className={`user__message user-message-skeleton skeleton`}></div>
+      <div
+        className={`message__bubble skeleton-message__bubble skeleton`}
+      ></div>
     </div>
   );
 }
