@@ -53,15 +53,6 @@ nav {
   }
 }
 
-.message-form {
-  position: relative;
-
-  & textarea:focus ~ .message__word-count,
-  textarea:not(:placeholder-shown) ~ .message__word-count {
-    display: inline;
-  }
-}
-
 .textarea-grow-wrap {
   display: grid;
 
@@ -81,11 +72,12 @@ nav {
 }
 
 .message__word-count {
-  left: 0;
-  right: 0;
-  top: 40%;
-  position: absolute;
-  display: none;
+  visibility: hidden;
+}
+
+.textarea-grow-wrap:has(textarea:focus, textarea:not(:placeholder-shown))
+  ~ .message__word-count {
+  visibility: visible;
 }
 
 /* Messageboard styles */
