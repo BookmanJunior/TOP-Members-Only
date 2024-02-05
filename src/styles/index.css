@@ -13,44 +13,6 @@
   -moz-osx-font-smoothing: grayscale;
 
   --input-padding: 0.3em 1em;
-  --pink: #de86ac;
-  --red: #ab1d19;
-  --gray: #527c8d;
-  --orange: #fda500;
-  --green: #59a259;
-  --brown: #797130;
-  --lime: #c8ffa6;
-  --blue: #51afe9;
-  --pink-gradient: linear-gradient(
-    #de86ac 0,
-    #c96294 50%,
-    #b34477 51%,
-    #af497c 100%
-  );
-  --red-gradient: linear-gradient(
-    #d1727a 0,
-    #a52526 50%,
-    #970d03 51%,
-    #a7140c 100%
-  );
-  --green-gradient: linear-gradient(
-    #acf26a 0,
-    #57c22a 50%,
-    #42aa2d 51%,
-    #4fb32e 100%
-  );
-  --gray--gradient: linear-gradient(
-    #cec5c3 0,
-    #a39a9c 50%,
-    #857981 51%,
-    #797175 100%
-  );
-  --orange--gradient: linear-gradient(
-    #fad34b 0,
-    #f99d35 50%,
-    #dc721b 51%,
-    #f9831e 100%
-  );
   --color-warning: #dd636e;
 }
 
@@ -165,17 +127,17 @@ input:invalid {
 .error-msg {
   display: flex;
   color: var(--color-warning);
-}
 
-.error-msg::before {
-  content: "";
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url("../assets/warning-icon.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-right: 0.7em;
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url("../assets/warning-icon.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 0.7em;
 
-  flex-shrink: 0;
+    flex-shrink: 0;
+  }
 }

@@ -86,33 +86,61 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: end;
+  gap: 1em;
   word-break: break-word;
 }
 
 .message {
   display: flex;
   gap: 2em;
-  margin-block: 1em;
 
-  & .avatar__message,
-  & .username__message {
+  & .message__avatar,
+  & .message__username {
     max-width: 3.15rem;
+    text-align: center;
   }
 }
 
-.user-info__message {
-  text-align: center;
-}
+.message__bubble {
+  --pink-gradient: linear-gradient(
+    #de86ac 0,
+    #c96294 50%,
+    #b34477 51%,
+    #af497c 100%
+  );
+  --red-gradient: linear-gradient(
+    #d1727a 0,
+    #a52526 50%,
+    #970d03 51%,
+    #a7140c 100%
+  );
+  --green-gradient: linear-gradient(
+    #acf26a 0,
+    #57c22a 50%,
+    #42aa2d 51%,
+    #4fb32e 100%
+  );
+  --gray-gradient: linear-gradient(
+    #cec5c3 0,
+    #a39a9c 50%,
+    #857981 51%,
+    #797175 100%
+  );
+  --orange-gradient: linear-gradient(
+    #fad34b 0,
+    #f99d35 50%,
+    #dc721b 51%,
+    #f9831e 100%
+  );
+  --blue-gradient: linear-gradient(
+    #8ac0e4 0,
+    #5aa6d2 50%,
+    #4191c7 51%,
+    #297db5 100%
+  );
+  --lime-gradient: linear-gradient(#abda68 50%, #84cc58 51%, #4d9744 100%);
+  --brown-gradient: linear-gradient(#bfa98a 50%, #ac7e38 51%, #a87b31 100%);
 
-.avatar__message {
-  aspect-ratio: 1;
-}
-
-.username__message {
-  word-break: break-all;
-}
-
-.user__message {
   --point-width: 1rem;
   --point-height: 0.7rem;
   --point-top-offset: 1.15rem;
@@ -157,52 +185,69 @@ nav {
     z-index: -1;
   }
 
-  &.user__message--pink {
+  &.message__bubble--pink {
     background-image: var(--pink-gradient);
   }
 
-  &.user__message--red {
+  &.message__bubble--red {
     background-image: var(--red-gradient);
   }
 
-  &.user__message--green {
+  &.message__bubble--green {
     background-image: var(--green-gradient);
   }
 
-  &.user__message--gray {
-    background-image: var(--gray--gradient);
+  &.message__bubble--gray {
+    background-image: var(--gray-gradient);
   }
 
-  &.user__message--orange {
-    background-image: var(--green-gradient);
+  &.message__bubble--orange {
+    background-image: var(--orange-gradient);
+  }
+
+  &.message__bubble--lime {
+    background-image: var(--lime-gradient);
+  }
+
+  &.message__bubble--brown {
+    background-image: var(--brown-gradient);
+  }
+
+  &.message__bubble--blue {
+    background-image: var(--blue-gradient);
   }
 }
 
 /* skeleton */
 
+.messages:has(.skeleton-message) {
+  margin-block: 1em;
+}
+
 .skeleton {
   background-color: #45474b;
-  animation: pulsate 800ms infinite alternate-reverse;
+  animation: glow 800ms infinite alternate-reverse;
+
+  &::before {
+    background-color: inherit;
+  }
 }
 
-.user-message-skeleton::before {
-  background-color: inherit;
-}
-
-.user-message-skeleton {
+.skeleton-message__bubble {
   width: 300px;
 }
 
-.avatar-skeleton {
-  height: 50px;
+.skeleton-message__avatar {
+  height: 3.15rem;
+  aspect-ratio: 1;
   margin-bottom: 3px;
 }
 
-.username-skeleton {
+.skeleton-message__username {
   height: 15px;
 }
 
-@keyframes pulsate {
+@keyframes glow {
   from {
     opacity: 0.8;
   }

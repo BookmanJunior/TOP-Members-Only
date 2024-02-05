@@ -13,6 +13,15 @@
 }
 
 .avatar__container {
+  --pink: #de86ac;
+  --red: #ab1d19;
+  --gray: #527c8d;
+  --orange: #fda500;
+  --green: #59a259;
+  --brown: #797130;
+  --lime: #c8ffa6;
+  --blue: #51afe9;
+
   display: inline-block;
   width: 75px;
   height: 75px;
