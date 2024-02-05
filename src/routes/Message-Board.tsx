@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, createRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Nav from "../components/Nav";
 import "../styles/message-board.css";
@@ -50,14 +50,12 @@ export default function MessageBoard() {
 
 function MessageForm({ setMessages, user }) {
   const [userMessage, setUserMessage] = useState("");
-  const [messageSubmitted, setMessageSubmitted] = useState(false);
   const [errors, setErrors] = useState();
   const formRef = useRef<HTMLFormElement>(null);
   const charactersLeft = 150 - userMessage.length;
 
-  async function handleMessageSubmit(e) {
+  async function handleMessageSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setMessageSubmitted(true);
 
     try {
       const res = await fetch("http://localhost:3000/message-board", {
@@ -75,14 +73,19 @@ function MessageForm({ setMessages, user }) {
       }
 
       const data = await res.json();
-      // edit message to include username
+      // edit message to include user
       const editedData = { ...data, user: user };
       setMessages((prev) => [...prev, editedData]);
       setUserMessage("");
     } catch (error) {
       console.log(error);
-    } finally {
-      setMessageSubmitted(false);
+    }
+  }
+
+  function handleEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (!e.shiftKey && e.key === "Enter") {
+      e.preventDefault();
+      formRef.current?.requestSubmit();
     }
   }
 
@@ -91,11 +94,6 @@ function MessageForm({ setMessages, user }) {
       <form
         className="message-form"
         onSubmit={handleMessageSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1em",
-        }}
         ref={formRef}
       >
         <div className="textarea-grow-wrap">
@@ -103,21 +101,16 @@ function MessageForm({ setMessages, user }) {
             name="message"
             rows={1}
             maxLength={150}
-            placeholder="Your message here..."
+            placeholder="Message"
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
-            onKeyDown={(e) => {
-              if (!e.shiftKey && e.key === "Enter") {
-                e.preventDefault();
-                formRef.current?.requestSubmit();
-              }
-            }}
+            onKeyDown={handleEnter}
           ></textarea>
           <span className="textarea__grow" aria-hidden="true">
             {`${userMessage} " "`}
           </span>
         </div>
-        {/* <span className="message__word-count">{charactersLeft}</span> */}
+        <span className="message__word-count">{charactersLeft}</span>
         {errors && (
           <ul className="errors">
             {errors.map((error) => (
@@ -127,7 +120,6 @@ function MessageForm({ setMessages, user }) {
             ))}
           </ul>
         )}
-        <button disabled={messageSubmitted}>Post</button>
       </form>
     </>
   );
@@ -160,7 +152,7 @@ function Messages({ messages, user, setMessages }) {
         </>
       ) : (
         Array.from({ length: 9 }).map((val, index) => {
-          return <MessageSkeletons key={index} />;
+          return <MessageSkeleton key={index} />;
         })
       )}
     </div>
@@ -232,7 +224,7 @@ function Message({ message, user, setMessages }) {
   );
 }
 
-function MessageSkeletons() {
+function MessageSkeleton() {
   return (
     <div className="message message-skeleton">
       <div className="user-info__message user-info__message-skeleton">
