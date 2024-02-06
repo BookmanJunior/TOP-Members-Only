@@ -1,49 +1,20 @@
-import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Auth from "./AuthFetch";
+import ValidationError from "./ValidationErrorMsg";
 
 export default function LoginForm() {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const { setError, setUser, error } = useOutletContext();
-
-  async function login(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
-
-      if (res.ok) {
-        const { user } = await res.json();
-        setUser(user);
-        navigate("/message-board");
-      }
-
-      if (res.status >= 400) {
-        const errorMessage = await res.json();
-        setError(errorMessage);
-      }
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const { loading, error, handleSubmit } = Auth(
+    "http://localhost:3000/auth/login",
+    credentials
+  );
 
   return (
     <>
-      <form onSubmit={login} className="login-form">
+      <form onSubmit={handleSubmit} className="login-form">
         <label htmlFor="username">Username: </label>
         <input
           type="text"
@@ -66,7 +37,7 @@ export default function LoginForm() {
           }
           autoComplete="current-password"
         />
-        {error && <span className="error-msg">{error.message}</span>}
+        <ValidationError errors={error} errorPath={"login"} />
         <button
           className={`login-btn ${loading ? "loading" : ""}`}
           disabled={loading}
