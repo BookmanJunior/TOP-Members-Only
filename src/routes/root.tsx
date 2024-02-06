@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import "../styles/App.css";
 
-export default function Root() {
-  const [user, setUser] = useState("");
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
+type User = {
+  username: string;
+  admin: boolean;
+  avatar: string;
+  id: string;
+};
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+type ContextType = {
+  user: User;
+  setUser: (user: User) => void;
+};
+
+export default function Root() {
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState();
 
   return (
     <>
@@ -17,11 +24,14 @@ export default function Root() {
         context={{
           user,
           setUser,
-          setLoading,
           setError,
           error,
         }}
       />
     </>
   );
+}
+
+export function RootStates() {
+  return useOutletContext<ContextType>();
 }
