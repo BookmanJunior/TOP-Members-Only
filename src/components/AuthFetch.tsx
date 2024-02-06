@@ -2,10 +2,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RootStates } from "../routes/root";
 
+type errorTypes = {
+  username?: string[];
+  password?: string[];
+  confirmPassword?: string[];
+  avatar?: string[];
+  login?: string[];
+  network?: string[];
+};
+
 export default function Auth(endpoint: string, body: object) {
   const { setUser } = RootStates();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<object | null>(null);
+  const [error, setError] = useState<errorTypes | null>(null);
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -44,7 +53,7 @@ export default function Auth(endpoint: string, body: object) {
       navigate("/message-board");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      setError(error);
+      setError({ network: [error.message] });
     } finally {
       setLoading(false);
     }
