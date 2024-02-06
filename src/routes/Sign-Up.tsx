@@ -9,7 +9,7 @@ export default function SignUp() {
   const [userCredentials, setUserCredentials] = useState({
     username: "",
     password: "",
-    "confirm-password": "",
+    confirmPassword: "",
     avatar: "",
   });
   const { loading, error, handleSubmit } = Auth(
@@ -24,8 +24,6 @@ export default function SignUp() {
     setUserCredentials({ ...userCredentials, [prop]: e.target.value });
   }
 
-  console.log(error);
-
   return (
     <>
       <img src={Logo} alt="dollars logo" className="logo logo-sign-up" />
@@ -38,7 +36,7 @@ export default function SignUp() {
           onChange={(e) => handleCredentialsChange(e, "username")}
           autoComplete="username"
         />
-        <ValidationError errors={error} errorPath={"username"} />
+        <ValidationError errors={error?.username} />
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -47,18 +45,18 @@ export default function SignUp() {
           onChange={(e) => handleCredentialsChange(e, "password")}
           autoComplete="new-password"
         />
-        <ValidationError errors={error} errorPath={"password"} />
+        <ValidationError errors={error?.password} />
         <label htmlFor="confirm-password">Confirm Password:</label>
         <input
           type="password"
           id="confirm-password"
-          name="confirm-password"
-          onChange={(e) => handleCredentialsChange(e, "confirm-password")}
+          name="confirmPassword"
+          onChange={(e) => handleCredentialsChange(e, "confirmPassword")}
           autoComplete="new-password"
         />
-        <ValidationError errors={error} errorPath={"confirm-password"} />
+        <ValidationError errors={error?.confirmPassword} />
         <AvatarPicker handleCredentialsChange={handleCredentialsChange} />
-        <ValidationError errors={error} errorPath={"avatar"} />
+        <ValidationError errors={error?.avatar ?? error?.network} />
         <button
           className={`sign-up-btn ${loading ? "loading" : ""}`}
           disabled={loading}

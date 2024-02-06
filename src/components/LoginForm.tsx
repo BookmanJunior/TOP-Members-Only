@@ -37,7 +37,7 @@ export default function LoginForm() {
           }
           autoComplete="current-password"
         />
-        <ValidationError errors={error} errorPath={"login"} />
+        <ValidationError errors={error?.login ?? error?.network} />
         <button
           className={`login-btn ${loading ? "loading" : ""}`}
           disabled={loading}
