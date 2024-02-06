@@ -123,6 +123,37 @@ input:invalid {
   }
 }
 
+.login-btn,
+.sign-up-btn {
+  position: relative;
+
+  &.loading::before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    border-top-color: #f0f8ff;
+    animation: spin 1s infinite;
+  }
+}
+
+.login-btn.loading::before {
+  left: 50px;
+}
+
+.sign-up-btn.loading::before {
+  left: 100px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 /* error styles */
 .error-msg {
   display: flex;
@@ -131,8 +162,8 @@ input:invalid {
   &::before {
     content: "";
     display: inline-block;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     background-image: url("../assets/warning-icon.png");
     background-size: cover;
     background-repeat: no-repeat;
