@@ -1,11 +1,12 @@
-import { useOutletContext, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import { useEffect } from "react";
+import { RootStates } from "./root";
 import Logo from "../assets/logo-durarara.svg";
 import "../styles/home.css";
 
 export default function Home() {
-  const { user, setUser } = useOutletContext();
+  const { user, setUser } = RootStates();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,14 +19,11 @@ export default function Home() {
           headers: { "Content-Type": "application/json" },
         });
 
-        if (res.status >= 400) {
-          navigate("/");
-          return;
+        if (res.ok) {
+          const { user } = await res.json();
+          setUser(user);
+          navigate("/message-board");
         }
-
-        const { user } = await res.json();
-        setUser(user);
-        navigate("/message-board");
       } catch (error) {
         navigate("/");
       }
