@@ -16,7 +16,6 @@ type ContextType = {
 
 export default function Root() {
   const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState();
 
   return (
     <>
@@ -24,8 +23,6 @@ export default function Root() {
         context={{
           user,
           setUser,
-          setError,
-          error,
         }}
       />
     </>
