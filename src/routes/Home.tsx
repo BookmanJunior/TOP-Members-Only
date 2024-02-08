@@ -3,7 +3,6 @@ import LoginForm from "../components/LoginForm";
 import { useEffect } from "react";
 import { RootStates } from "./root";
 import Logo from "../assets/logo-durarara.svg";
-import "../styles/home.css";
 
 export default function Home() {
   const { user, setUser } = RootStates();
