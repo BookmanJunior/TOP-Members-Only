@@ -143,6 +143,21 @@
   }
 }
 
+.new-message {
+  transform: scale(0);
+  animation: popup 200ms ease-out forwards;
+}
+
+@keyframes popup {
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* footer styles */
 footer {
   position: sticky;
