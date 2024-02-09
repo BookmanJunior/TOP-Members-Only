@@ -18,7 +18,21 @@ const avatars = [
   { src: lime, value: "lime" },
 ];
 
-export default function AvatarPicker({ handleCredentialsChange }) {
+type handleCredentialsChangeProp = {
+  handleCredentialsChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    avatar: string
+  ) => void;
+};
+
+type AvatarProps = {
+  value: string;
+  src: string;
+} & handleCredentialsChangeProp;
+
+export default function AvatarPicker({
+  handleCredentialsChange,
+}: handleCredentialsChangeProp) {
   return (
     <section className="avatar-picker">
       <p className="title__avatar-picker">Choose Avatar: </p>
@@ -36,7 +50,7 @@ export default function AvatarPicker({ handleCredentialsChange }) {
   );
 }
 
-function Avatar({ value, src, handleCredentialsChange }) {
+function Avatar({ value, src, handleCredentialsChange }: AvatarProps) {
   return (
     <label
       htmlFor={`avatar__${value}`}
