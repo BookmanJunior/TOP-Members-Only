@@ -1,12 +1,35 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { RootStates } from "./root";
+import { UserProps } from "../Types";
 import Nav from "../components/Nav";
 import "../styles/message-board.css";
 
+type messageProps = {
+  _id: string;
+  date: Date;
+  message: string;
+  user: UserProps;
+};
+
+type setMessagesProps = {
+  setMessages: (messages: messageProps[]) => void;
+};
+
+type MessagesProps = {
+  messages: messageProps[];
+  user: UserProps;
+} & setMessagesProps;
+
+type MessageProps = {
+  message: messageProps;
+  user: UserProps;
+} & setMessagesProps;
+
 export default function MessageBoard() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<messageProps[]>([]);
   const navigate = useNavigate();
-  const { user } = useOutletContext();
+  const { user, setUser } = RootStates();
 
   useEffect(() => {
     async function fetchMessages() {
@@ -18,16 +41,16 @@ export default function MessageBoard() {
           headers: { "Content-Type": "application/json" },
         });
 
-        if (res.ok) {
-          const data = await res.json();
-          setMessages(data);
+        if (res.status >= 400) {
+          navigate("/");
+          return;
         }
 
-        if (res.status === 401 || res.status === 403) {
-          navigate("/");
-        }
+        const data = await res.json();
+        setMessages(data.messages);
+        !user && setUser(data.user);
       } catch (error) {
-        console.log(error);
+        navigate("/");
       }
     }
 
@@ -41,16 +64,18 @@ export default function MessageBoard() {
       <footer>
         <div className="footer__wrapper">
           <Nav user={user} />
-          <MessageForm setMessages={setMessages} user={user} />
+          <MessageForm setMessages={setMessages} />
         </div>
       </footer>
     </div>
   );
 }
 
-function MessageForm({ setMessages, user }) {
+function MessageForm({ setMessages }: setMessagesProps) {
   const [userMessage, setUserMessage] = useState("");
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState<{ path: string; msg: string }[] | null>(
+    null
+  );
   const formRef = useRef<HTMLFormElement>(null);
   const charactersLeft = 150 - userMessage.length;
 
@@ -73,10 +98,9 @@ function MessageForm({ setMessages, user }) {
       }
 
       const data = await res.json();
-      // edit message to include user
-      const editedData = { ...data, user: user };
-      setMessages((prev) => [...prev, editedData]);
+      setMessages(data);
       setUserMessage("");
+      setErrors(null);
     } catch (error) {
       console.log(error);
     }
@@ -125,7 +149,7 @@ function MessageForm({ setMessages, user }) {
   );
 }
 
-function Messages({ messages, user, setMessages }) {
+function Messages({ messages, user, setMessages }: MessagesProps) {
   const messageEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -151,7 +175,7 @@ function Messages({ messages, user, setMessages }) {
           <div ref={messageEndRef} className="scroll__to__bottom"></div>
         </>
       ) : (
-        Array.from({ length: 9 }).map((val, index) => {
+        Array.from({ length: 9 }).map((_val, index) => {
           return <SkeletonMessage key={index} />;
         })
       )}
@@ -159,7 +183,7 @@ function Messages({ messages, user, setMessages }) {
   );
 }
 
-function Message({ message, user, setMessages }) {
+function Message({ message, user, setMessages }: MessageProps) {
   const isUserAdmin = user?.admin;
   const userAvatar = `avatars/${message?.user?.avatar}.svg`;
   const messageCredentials = {
@@ -167,7 +191,7 @@ function Message({ message, user, setMessages }) {
   };
   const [deletingMessageStatus, setDeletingMessageStatus] = useState(false);
 
-  async function handleMessageDelete(e) {
+  async function handleMessageDelete(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setDeletingMessageStatus(true);
 
