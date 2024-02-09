@@ -16,12 +16,15 @@ export default function Root() {
   useEffect(() => {
     async function auth() {
       try {
-        const res = await fetch("http://localhost:3000/auth/automatic-login", {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        });
+        const res = await fetch(
+          "https://top-members-only-api.fly.dev/auth/automatic-login",
+          {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         if (res.ok) {
           const { user } = await res.json();

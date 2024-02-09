@@ -35,12 +35,15 @@ export default function MessageBoard() {
   useEffect(() => {
     async function fetchMessages() {
       try {
-        const res = await fetch("http://localhost:3000/message-board", {
-          method: "GET",
-          mode: "cors",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        });
+        const res = await fetch(
+          "https://top-members-only-api.fly.dev/message-board",
+          {
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         if (res.status >= 400) {
           navigate("/");
@@ -84,13 +87,16 @@ function MessageForm({ setMessages }: setMessagesProps) {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/message-board", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
-      });
+      const res = await fetch(
+        "https://top-members-only-api.fly.dev/message-board",
+        {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage }),
+        }
+      );
 
       if (res.status >= 400) {
         const errorData = await res.json();
@@ -198,7 +204,7 @@ function Message({ message, user, setMessages }: MessageProps) {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/message-board/${message._id}/delete`,
+        `https://top-members-only-api.fly.dev/message-board/${message._id}/delete`,
         {
           method: "DELETE",
           mode: "cors",

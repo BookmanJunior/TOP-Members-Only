@@ -8,7 +8,7 @@ export default function LoginForm() {
     password: "",
   });
   const { loading, error, handleSubmit } = Auth(
-    "http://localhost:3000/auth/login",
+    "https://top-members-only-api.fly.dev/auth/login",
     credentials
   );
 

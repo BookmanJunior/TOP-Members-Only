@@ -13,7 +13,7 @@ export default function SignUp() {
     avatar: "",
   });
   const { loading, error, handleSubmit } = Auth(
-    "http://localhost:3000/sign-up",
+    "https://top-members-only-api.fly.dev/sign-up",
     userCredentials
   );
 
