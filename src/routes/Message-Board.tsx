@@ -54,7 +54,7 @@ export default function MessageBoard() {
         setMessages(data.messages);
         !user && setUser(data.user);
       } catch (error) {
-        navigate("/");
+        console.log(error);
       }
     }
 
