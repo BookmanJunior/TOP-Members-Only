@@ -7,12 +7,15 @@ export default function LogOut() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/auth/logout", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await fetch(
+        "https://top-members-only-api.fly.dev/auth/logout",
+        {
+          method: "POST",
+          mode: "cors",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (res.status >= 400) {
         return console.log("error");
