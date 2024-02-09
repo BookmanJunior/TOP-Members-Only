@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "../assets/logo-durarara.svg";
 import AvatarPicker from "../components/AvatarPicker";
 import Auth from "../components/AuthFetch";
@@ -26,7 +27,9 @@ export default function SignUp() {
 
   return (
     <>
-      <img src={Logo} alt="dollars logo" className="logo logo-sign-up" />
+      <Link to="/">
+        <img src={Logo} alt="dollars logo" className="logo logo-sign-up" />
+      </Link>
       <form onSubmit={handleSubmit} className="sign-up-form">
         <label htmlFor="username">Username:</label>
         <input
