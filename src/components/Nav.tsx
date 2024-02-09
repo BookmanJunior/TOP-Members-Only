@@ -1,12 +1,17 @@
 import LogOut from "./LogOut";
+import { UserProps } from "../Types";
 
-export default function Nav({ user }: { user: { avatar: string } }) {
-  const avatarSrc = `../../public/avatars/${user.avatar}.svg`;
+type userProps = {
+  user: UserProps;
+};
+
+export default function Nav({ user }: userProps) {
+  const avatarSrc = `../../public/avatars/${user?.avatar}.svg`;
   return (
     <nav className="nav">
       <div className="nav__user">
         <img src={avatarSrc} alt="user avatar" className="avatar__nav" />
-        <p className="nav__username">{user.username}</p>
+        <p className="nav__username">{user?.username}</p>
       </div>
       <LogOut />
     </nav>
