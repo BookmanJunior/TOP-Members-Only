@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { RootStates } from "./root";
 import { UserProps } from "../Types";
 import Nav from "../components/Nav";
+import getAvatarUrl from "../avatar-util.js";
 import "../styles/message-board.css";
 
 type messageProps = {
@@ -185,7 +186,7 @@ function Messages({ messages, user, setMessages }: MessagesProps) {
 
 function Message({ message, user, setMessages }: MessageProps) {
   const isUserAdmin = user?.admin;
-  const userAvatar = `avatars/${message?.user?.avatar}.svg`;
+  const userAvatar = getAvatarUrl(`${message?.user?.avatar}.svg`);
   const messageCredentials = {
     messageId: message._id,
   };

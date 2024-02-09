@@ -1,11 +1,11 @@
-import blue from "../../public/avatars/blue.svg";
-import orange from "../../public/avatars/orange.svg";
-import gray from "../../public/avatars/gray.svg";
-import green from "../../public/avatars/green.svg";
-import red from "../../public/avatars/red.svg";
-import pink from "../../public/avatars/pink.svg";
-import brown from "../../public/avatars/brown.svg";
-import lime from "../../public/avatars/lime.svg";
+import blue from "../assets/avatars/blue.svg";
+import orange from "../assets/avatars/orange.svg";
+import gray from "../assets/avatars/gray.svg";
+import green from "../assets/avatars/green.svg";
+import red from "../assets/avatars/red.svg";
+import pink from "../assets/avatars/pink.svg";
+import brown from "../assets/avatars/brown.svg";
+import lime from "../assets/avatars/lime.svg";
 
 const avatars = [
   { src: blue, value: "blue" },
