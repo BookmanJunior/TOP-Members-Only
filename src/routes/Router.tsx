@@ -3,12 +3,14 @@ import Root from "./root";
 import Home from "./Home";
 import MessageBoard from "./Message-Board";
 import SignUp from "./Sign-Up";
+import ErrorElement from "./Error";
 
 export default function Router() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Root />,
+      errorElement: <ErrorElement />,
       children: [
         {
           element: <Home />,
