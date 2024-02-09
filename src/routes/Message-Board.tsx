@@ -17,18 +17,25 @@ type setMessagesProps = {
   setMessages: (messages: messageProps[]) => void;
 };
 
+type MessageFormProps = {
+  setNewMessage: (message: string) => void;
+} & setMessagesProps;
+
 type MessagesProps = {
   messages: messageProps[];
   user: UserProps;
+  newMessage: string;
 } & setMessagesProps;
 
 type MessageProps = {
   message: messageProps;
   user: UserProps;
+  isNewMessage: string;
 } & setMessagesProps;
 
 export default function MessageBoard() {
   const [messages, setMessages] = useState<messageProps[]>([]);
+  const [newMessage, setNewMessage] = useState("");
   const navigate = useNavigate();
   const { user, setUser } = RootStates();
 
@@ -64,18 +71,26 @@ export default function MessageBoard() {
 
   return (
     <div className="message-board">
-      <Messages messages={messages} user={user} setMessages={setMessages} />
+      <Messages
+        messages={messages}
+        user={user}
+        setMessages={setMessages}
+        newMessage={newMessage}
+      />
       <footer>
         <div className="footer__wrapper">
           <Nav user={user} />
-          <MessageForm setMessages={setMessages} />
+          <MessageForm
+            setMessages={setMessages}
+            setNewMessage={setNewMessage}
+          />
         </div>
       </footer>
     </div>
   );
 }
 
-function MessageForm({ setMessages }: setMessagesProps) {
+function MessageForm({ setMessages, setNewMessage }: MessageFormProps) {
   const [userMessage, setUserMessage] = useState("");
   const [errors, setErrors] = useState<{ path: string; msg: string }[] | null>(
     null
@@ -105,7 +120,8 @@ function MessageForm({ setMessages }: setMessagesProps) {
       }
 
       const data = await res.json();
-      setMessages(data);
+      setMessages(data.messages);
+      setNewMessage(data.newMessage);
       setUserMessage("");
       setErrors(null);
     } catch (error) {
@@ -156,7 +172,7 @@ function MessageForm({ setMessages }: setMessagesProps) {
   );
 }
 
-function Messages({ messages, user, setMessages }: MessagesProps) {
+function Messages({ messages, user, setMessages, newMessage }: MessagesProps) {
   const messageEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -176,6 +192,7 @@ function Messages({ messages, user, setMessages }: MessagesProps) {
                 message={message}
                 user={user}
                 setMessages={setMessages}
+                isNewMessage={newMessage === message._id ? newMessage : ""}
               />
             );
           })}
@@ -190,7 +207,7 @@ function Messages({ messages, user, setMessages }: MessagesProps) {
   );
 }
 
-function Message({ message, user, setMessages }: MessageProps) {
+function Message({ message, user, setMessages, isNewMessage }: MessageProps) {
   const isUserAdmin = user?.admin;
   const userAvatar = getAvatarUrl(`${message?.user?.avatar}.svg`);
   const messageCredentials = {
@@ -231,7 +248,7 @@ function Message({ message, user, setMessages }: MessageProps) {
 
   return (
     <>
-      <div className="message">
+      <div className={`message`}>
         <div className="message__user-info">
           <img
             src={userAvatar}
@@ -241,7 +258,9 @@ function Message({ message, user, setMessages }: MessageProps) {
           <div className="message__username">{message?.user?.username}</div>
         </div>
         <div
-          className={`message__bubble message__bubble--${message?.user?.avatar}`}
+          className={`message__bubble message__bubble--${
+            message?.user?.avatar
+          } ${isNewMessage ? "new-message" : ""}`}
         >
           {message.message}
         </div>
