@@ -7,23 +7,15 @@ export default function LogOut() {
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        "https://top-members-only-api.fly.dev/auth/logout",
-        {
-          method: "POST",
-          mode: "cors",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      if (res.status >= 400) {
-        return console.log("error");
-      }
-
       navigate("/");
+      await fetch("https://top-members-only-api.fly.dev/auth/logout", {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
-      console.log(error);
+      console.log("Logged out on client-side.");
     }
   }
 
