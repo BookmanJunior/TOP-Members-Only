@@ -15,6 +15,12 @@
   word-break: break-word;
 }
 
+@media screen and (max-width: 650px) {
+  .messages {
+    padding: 1em;
+  }
+}
+
 .message {
   display: flex;
   gap: 2em;
