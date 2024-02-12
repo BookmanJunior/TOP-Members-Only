@@ -11,7 +11,7 @@ type errorTypes = {
   network?: string[];
 };
 
-export default function Auth(endpoint: string, body: object) {
+export default function Auth(endpoint: string) {
   const { setUser } = RootStates();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<errorTypes | null>(null);
@@ -19,6 +19,7 @@ export default function Auth(endpoint: string, body: object) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     setLoading(true);
 
     try {
@@ -27,7 +28,7 @@ export default function Auth(endpoint: string, body: object) {
         mode: "cors",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify(Object.fromEntries(formData)),
       });
 
       if (res.status >= 400) {
