@@ -16,41 +16,27 @@ const avatars = [
   { src: pink, value: "pink" },
   { src: brown, value: "brown" },
   { src: lime, value: "lime" },
-];
-
-type handleCredentialsChangeProp = {
-  handleCredentialsChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    avatar: string
-  ) => void;
-};
+] as const;
 
 type AvatarProps = {
   value: string;
   src: string;
-} & handleCredentialsChangeProp;
+};
 
-export default function AvatarPicker({
-  handleCredentialsChange,
-}: handleCredentialsChangeProp) {
+export default function AvatarPicker() {
   return (
-    <section className="avatar-picker">
-      <p className="title__avatar-picker">Choose Avatar: </p>
+    <div className="avatar-picker">
+      <p className="title__avatar-picker">Choose Avatar</p>
       <div role="radiogroup" className="avatars-wrapper">
         {avatars.map((avatar) => (
-          <Avatar
-            key={avatar.value}
-            value={avatar.value}
-            src={avatar.src}
-            handleCredentialsChange={handleCredentialsChange}
-          />
+          <Avatar key={avatar.value} value={avatar.value} src={avatar.src} />
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 
-function Avatar({ value, src, handleCredentialsChange }: AvatarProps) {
+function Avatar({ value, src }: AvatarProps) {
   return (
     <label
       htmlFor={`avatar__${value}`}
@@ -63,7 +49,7 @@ function Avatar({ value, src, handleCredentialsChange }: AvatarProps) {
         id={`avatar__${value}`}
         className={`avatar__btn`}
         value={value}
-        onChange={(e) => handleCredentialsChange(e, "avatar")}
+        required
       />
     </label>
   );
