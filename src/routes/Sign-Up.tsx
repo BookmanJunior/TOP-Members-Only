@@ -12,7 +12,7 @@ import ValidationError from "../components/ValidationErrorMsg";
 import "../styles/sign-up.css";
 
 export default function SignUp() {
-  const apiEndpoint = "http://localhost:3000/sign-up";
+  const apiEndpoint = "https://top-members-only-api.fly.dev/sign-up";
   const { loading, error, handleSubmit } = Auth(apiEndpoint);
 
   return (

@@ -3,7 +3,7 @@ import { UsernameInput, PasswordInput, FormButton } from "./FormInputs";
 import ValidationError from "./ValidationErrorMsg";
 
 export default function LoginForm() {
-  const apiEndpoint = "http://localhost:3000/auth/login";
+  const apiEndpoint = "https://top-members-only-api.fly.dev/auth/login";
   const { loading, error, handleSubmit } = Auth(apiEndpoint);
 
   return (
