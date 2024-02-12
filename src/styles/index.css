@@ -149,10 +149,15 @@ input:invalid {
   flex-direction: column;
   gap: var(--gap);
   max-width: 350px;
-  margin-block: 1rem 0.5rem;
+  margin-block: calc(var(--gap) + 0.5em) var(--gap);
 
-  & > button {
-    margin-top: var(--gap);
+  & > label {
+    display: flex;
+    flex-direction: column;
+
+    & span {
+      text-transform: capitalize;
+    }
   }
 }
 
@@ -174,6 +179,7 @@ input:invalid {
 .error-msg {
   display: flex;
   color: var(--color-warning);
+  margin-block: var(--gap);
 
   &::before {
     content: "";
