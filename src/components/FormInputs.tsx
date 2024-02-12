@@ -6,6 +6,11 @@ type InputLabelProps = {
   children?: ReactNode | ReactNode[];
 };
 
+type FormButtonProps = {
+  loading: boolean;
+  children: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+
 export function UsernameInput({ name, title = "", children }: InputLabelProps) {
   return (
     <InputLabel name={name} title={title}>
@@ -24,10 +29,27 @@ export function PasswordInput({ name, title = "", children }: InputLabelProps) {
   );
 }
 
+export function FormButton({
+  className,
+  loading,
+  children,
+  ...props
+}: FormButtonProps) {
+  return (
+    <button
+      disabled={loading}
+      className={`${className} ${loading ? "loading" : ""}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
 function InputLabel({ name, title = "", children }: InputLabelProps) {
   return (
     <label htmlFor={name}>
-      {title ? title : name}
+      <span className="label-title">{title ? title : name}</span>
       {children}
     </label>
   );
