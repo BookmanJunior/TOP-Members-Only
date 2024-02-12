@@ -15,13 +15,22 @@
   --lime: #c8ffa6;
   --blue: #51afe9;
 
-  display: inline-block;
+  display: grid;
   width: 75px;
   height: 75px;
-  cursor: pointer;
   transition: 100ms;
 
   position: relative;
+
+  & > input {
+    appearance: none;
+    cursor: pointer;
+  }
+
+  & > img,
+  & > input {
+    grid-area: 1 / 1 / 1 / 1;
+  }
 }
 
 .avatar__container::before {
@@ -80,10 +89,4 @@
 
 .avatar__container--lime::before {
   background-color: var(--lime);
-}
-
-input[type="radio"] {
-  appearance: none;
-  width: 0;
-  height: 0;
 }
