@@ -14,6 +14,7 @@
 
   --input-padding: 0.3em 1em;
   --color-warning: #dd636e;
+  --color-valid: #6fc276;
 }
 
 *,
@@ -57,8 +58,8 @@ h6 {
   isolation: isolate;
 }
 
-input {
-  padding: var(--input-padding);
+label {
+  cursor: pointer;
 }
 
 ul {
@@ -108,8 +109,23 @@ button {
   }
 }
 
-input:invalid {
-  outline: 1px solid var(--color-warning);
+input {
+  border: none;
+  outline: 2px solid transparent;
+
+  &:not([type="radio"]) {
+    padding: var(--input-padding);
+    outline-color: #f0f8ff;
+    border-radius: 3px;
+  }
+
+  &:required:valid:not([type="radio"]) {
+    outline-color: var(--color-valid);
+  }
+
+  &:invalid {
+    outline-color: var(--color-warning);
+  }
 }
 
 .logo {
@@ -143,17 +159,18 @@ input:invalid {
 
 .login-form,
 .sign-up-form {
-  --gap: 0.5em;
+  --gap: 1em;
 
   display: flex;
   flex-direction: column;
   gap: var(--gap);
   max-width: 350px;
-  margin-block: calc(var(--gap) + 0.5em) var(--gap);
+  margin-block: var(--gap);
 
   & > label {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 
     & span {
       text-transform: capitalize;
