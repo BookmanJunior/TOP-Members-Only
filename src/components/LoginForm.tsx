@@ -1,49 +1,20 @@
-import { useState } from "react";
 import Auth from "./AuthFetch";
+import { UsernameInput, PasswordInput, FormButton } from "./FormInputs";
 import ValidationError from "./ValidationErrorMsg";
 
 export default function LoginForm() {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
-  const { loading, error, handleSubmit } = Auth(
-    "https://top-members-only-api.fly.dev/auth/login",
-    credentials
-  );
+  const apiEndpoint = "http://localhost:3000/auth/login";
+  const { loading, error, handleSubmit } = Auth(apiEndpoint);
 
   return (
     <>
       <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          value={credentials.username}
-          onChange={(e) =>
-            setCredentials({ ...credentials, username: e.target.value })
-          }
-          autoComplete="username"
-        />
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={credentials.password}
-          onChange={(e) =>
-            setCredentials({ ...credentials, password: e.target.value })
-          }
-          autoComplete="current-password"
-        />
+        <UsernameInput name="username" />
+        <PasswordInput name="password" />
         <ValidationError errors={error?.login ?? error?.network} />
-        <button
-          className={`login-btn ${loading ? "loading" : ""}`}
-          disabled={loading}
-        >
+        <FormButton loading={loading} className="login-btn">
           Login
-        </button>
+        </FormButton>
       </form>
     </>
   );

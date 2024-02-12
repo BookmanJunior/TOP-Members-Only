@@ -1,29 +1,19 @@
-import { useState } from "react";
+// import { useRef } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo-durarara.svg";
 import AvatarPicker from "../components/AvatarPicker";
 import Auth from "../components/AuthFetch";
+import {
+  PasswordInput,
+  UsernameInput,
+  FormButton,
+} from "../components/FormInputs";
 import ValidationError from "../components/ValidationErrorMsg";
 import "../styles/sign-up.css";
 
 export default function SignUp() {
-  const [userCredentials, setUserCredentials] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    avatar: "",
-  });
-  const { loading, error, handleSubmit } = Auth(
-    "https://top-members-only-api.fly.dev/sign-up",
-    userCredentials
-  );
-
-  function handleCredentialsChange(
-    e: React.ChangeEvent<HTMLInputElement>,
-    prop: string
-  ) {
-    setUserCredentials({ ...userCredentials, [prop]: e.target.value });
-  }
+  const apiEndpoint = "http://localhost:3000/sign-up";
+  const { loading, error, handleSubmit } = Auth(apiEndpoint);
 
   return (
     <>
@@ -31,41 +21,25 @@ export default function SignUp() {
         <img src={Logo} alt="dollars logo" className="logo logo-sign-up" />
       </Link>
       <form onSubmit={handleSubmit} className="sign-up-form">
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          onChange={(e) => handleCredentialsChange(e, "username")}
-          autoComplete="username"
-        />
-        <ValidationError errors={error?.username} />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={(e) => handleCredentialsChange(e, "password")}
-          autoComplete="new-password"
-        />
-        <ValidationError errors={error?.password} />
-        <label htmlFor="confirm-password">Confirm Password:</label>
-        <input
-          type="password"
-          id="confirm-password"
+        <UsernameInput name="username" minLength={4} maxLength={13} required>
+          <ValidationError errors={error?.username} />
+        </UsernameInput>
+        <PasswordInput name="password" minLength={8} required>
+          <ValidationError errors={error?.password} />
+        </PasswordInput>
+        <PasswordInput
           name="confirmPassword"
-          onChange={(e) => handleCredentialsChange(e, "confirmPassword")}
-          autoComplete="new-password"
-        />
-        <ValidationError errors={error?.confirmPassword} />
-        <AvatarPicker handleCredentialsChange={handleCredentialsChange} />
-        <ValidationError errors={error?.avatar ?? error?.network} />
-        <button
-          className={`sign-up-btn ${loading ? "loading" : ""}`}
-          disabled={loading}
+          title="confirm password"
+          minLength={8}
+          required
         >
-          Register
-        </button>
+          <ValidationError errors={error?.confirmPassword} />
+        </PasswordInput>
+        <AvatarPicker />
+        <ValidationError errors={error?.avatar ?? error?.network} />
+        <FormButton loading={loading} className="sign-up-btn">
+          Sign Up
+        </FormButton>
       </form>
     </>
   );
