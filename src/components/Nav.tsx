@@ -7,14 +7,20 @@ type userProps = {
 };
 
 export default function Nav({ user }: userProps) {
-  const avatarSrc = getAvatarUrl(`${user.avatar}.svg`);
   return (
     <nav className="nav">
-      <div className="nav__user">
-        <img src={avatarSrc} alt="user avatar" className="avatar__nav" />
-        <p className="nav__username">{user?.username}</p>
-      </div>
+      <NavUser user={user} />
       <LogOut />
     </nav>
+  );
+}
+
+function NavUser({ user }: userProps) {
+  const avatarSrc = getAvatarUrl(`${user.avatar}.svg`);
+  return (
+    <div className="nav__user">
+      <img src={avatarSrc} alt="user avatar" className="avatar__nav" />
+      <p className="nav__username">{user?.username}</p>
+    </div>
   );
 }
