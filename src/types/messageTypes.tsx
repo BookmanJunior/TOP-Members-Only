@@ -1,4 +1,4 @@
-import { UserProps } from "../Types";
+import { UserProps } from "./UserTypes";
 
 export type messageProps = {
   _id: string;
