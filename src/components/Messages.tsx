@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { messageProps, setMessagesProps } from "../types/messageTypes";
-import { UserProps } from "../Types";
+import { UserProps } from "../types/UserTypes";
 import getAvatarUrl from "../avatar-util";
 
 type MessagesProps = {

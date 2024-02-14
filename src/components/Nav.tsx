@@ -1,5 +1,5 @@
 import LogOut from "./LogOut";
-import { UserProps } from "../Types";
+import { UserProps } from "../types/UserTypes";
 import getAvatarUrl from "../avatar-util";
 
 type userProps = {
