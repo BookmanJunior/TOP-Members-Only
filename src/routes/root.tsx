@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, useOutletContext, useNavigate } from "react-router-dom";
-import { UserProps } from "../Types";
+import { UserProps } from "../types/UserTypes";
 import "../styles/App.css";
 
 type ContextType = {
