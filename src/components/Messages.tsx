@@ -106,13 +106,13 @@ function MessageDeleteButton({ message, setMessages }: DeleteButtonProps) {
 
     try {
       const res = await fetch(
-        `https://top-members-only-api.fly.dev/message-board/${message._id}/delete`,
+        `https://top-members-only-api.fly.dev/message-board/${message._id}`,
         {
           method: "DELETE",
           mode: "cors",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(message.user.username),
+          body: JSON.stringify({ username: message.user.username }),
         }
       );
 
